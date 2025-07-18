@@ -1,3 +1,5 @@
+import initialProducts from  "./products.json" 
+
 class ListaDeCosas {
   name: string;
   cosas: any[] = [];
@@ -13,6 +15,10 @@ class ListaDeCosas {
   }
 }
 
+
+
+
+
 class Product {
   name: string;
   price: number;
@@ -24,6 +30,48 @@ class Product {
   }
 }
 
-class ListaDeProductos extends ListaDeCosas {}
+class ListaDeProductos extends ListaDeCosas {
+  products:Product[]
+  constructor(name, ){
+
+
+    super(name)
+    this.products=[]
+    initialProducts.forEach((e=>this.addProduct(e)))
+    
+  }
+   addProduct(product: Product ):void{
+   
+    if(!this.products.some((e=>e.id===product.id))){
+    this.products.push(product)
+    this.add(product)
+
+}
+    
+
+}
+ getProduct(id: number): Product {
+  return this.products.find(e=>e.id===id)
+  }
+
+  removeProduct(id: number): void {
+    this.products= this.products.filter(e=>e.id!==id)
+    this.cosas = this.cosas.filter(e => e.id !== id);
+  }
+
+  getSortedByPrice(order: "asc" | "desc"): Product[] {
+  if (order === "asc") {
+    return this.products.sort((a, b) => a.price - b.price);
+  } else {
+    return this.products.sort((a, b) => b.price - a.price);
+  }
+}
+
+  }
+
 
 export { ListaDeProductos, Product };
+
+ 
+  
+
